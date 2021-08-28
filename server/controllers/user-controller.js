@@ -9,14 +9,14 @@ const bcrypt = require('bcryptjs');
 router.post('/register', (req, res) => {
     let userForm = {
         username: req.body.user.username,
-        password: bcrypt.hashSync(req.body.user.password, 13),
+        password: bcrypt.hashSync(req.body.user.password, 13), 
     };
 
     User.create(userForm)
     .then(function createSuccess(user) {
         let token = jwt.sign({
             id: user.id
-        }, "i_am_secret", {
+        }, process.env.JWT_SECRET, {
             expiresIn: 60 * 60 * 24
         }
         );
@@ -39,10 +39,10 @@ router.post('/login', (req, res) => {
             bcrypt.compare(
                 req.body.user.password,
                 user.password,
-                function(err, matches) {
+                (err, matches) => {
                     if (matches) {
                         let token = jwt.sign({id: user.id},
-                        'i_am_secret', {
+                        process.env.JWT_SECRET, {
                             expiresIn: 60 * 60 * 24, 
                         });
                     res.status(200).json({
@@ -51,7 +51,7 @@ router.post('/login', (req, res) => {
                         sessionToken: token,
                     });
                     } else {
-                        res.status(502).send({error: 'Login failed'})
+                        res.status(502).send({error: 'Login failed'}) //incorrect login password.
                     }
                 }
             );

@@ -6,7 +6,7 @@ const Signup = (props) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')  
     const [isUsernameAvailable, setIsUsernameAvailable] = useState(true)
-    const [displayFormValidation, setDisplayFormValidation] = useState(false)
+    const [formValidation, setFormValidation] = useState(false)
 
     const handleInput = e => {
         setUsername(e.target.value)
@@ -30,9 +30,9 @@ const Signup = (props) => {
         e.preventDefault()
 
         if(!username || !password || !isUsernameAvailable){
-            setDisplayFormValidation(true)
+            setFormValidation(true)
         } else {
-            setDisplayFormValidation(false)
+            setFormValidation(false)
             fetch(`http://localhost:3000/user/register`, {
                 method: 'POST',
                 mode: 'cors', 
@@ -64,8 +64,8 @@ const Signup = (props) => {
                 <Label htmlFor="password">Password</Label>
                 <Input onChange={e=>setPassword(e.target.value)} type="password" name="password" value={password} />
             </FormGroup>
-            {displayFormValidation ? <p>Please fill out required (*) fields.</p> : <p>***All Fields Required***</p>}
-            {username === '' ? '' : isUsernameAvailable ? <p>Username is available!</p> : <p style={{color: 'red'}}>That username is already in use.</p>}
+            {FormValidation ? <p>Please fill out required (*) fields.</p> : <p>***All Fields Required***</p>}
+            {/* {username === '' ? '' : isUsernameAvailable ? <p>Username is available!</p> : <p style={{color: 'red'}}>That username is already in use.</p>} */}
             <Button className="my-3" type="submit">Signup</Button>
         </Form>
         </div>

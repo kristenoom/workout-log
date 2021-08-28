@@ -10,7 +10,7 @@ sequelize.sync();
 //sequalize.sync({force:true});
 
 app.use(express.json());
-//app.use(require("./middleware/headers"));
+app.use(require("./middleware/headers"));
 
 //Exposed
 app.use("/user", user);
@@ -19,6 +19,6 @@ app.use("/user", user);
 //app.use(require('./middleware/validate-session'));
 app.use('/log', log);
 
-app.listen(3001, function () {
-  console.log("App is listening on port 3001");
+app.listen(3000, function () {
+  console.log("App is listening on port 3000");
 });

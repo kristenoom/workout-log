@@ -1,17 +1,18 @@
-const express = require('express');
-const router = express.Router();
+const router = require('express').Router();
+const validateSession = require('../middleware/validate-session');
 const sequelize = require('../db');
 const Log = sequelize.import('../models/log');
+
 
 /* ***********************
 **** CREATE LOG ENTRY ****
 *********************** */
-router.post('/log', (req,res) => {
+router.post('/', validateSession, (req, res) => {
     const logEntry = {
-        username: req.body.username,
-        description: req.body.description,
-        definition: req.body.definition,
-        result: req.body.result
+        owner_id: req.user.id,
+        description: req.body.log.description,
+        definition: req.body.log.definition,
+        result: req.body.log.result
     };
     
     Log.create(logEntry)
@@ -22,8 +23,9 @@ router.post('/log', (req,res) => {
 /* ***********************
 **** RETURN LOG ENTRY ****
 *********************** */
-router.get('/log', (req, res) => {
-    const query = {where: {username: req.params.username}};
+//http://localhost:3000/log/log
+router.get('/log', validateSession, (req, res) => {
+    const query = {where: {owner_id: req.params.id}};
 
     Log.findAll()
     .then((logs) => res.status(200).json(logs))
@@ -34,9 +36,11 @@ router.get('/log', (req, res) => {
 **** RETURN LOG ENTRY ****
 *** BY INDIVIDUAL USER ***
 *********************** */
-router.get('/log/:id', (req, res) => {
-    const query = {where: {username: req.params.username}}
-    Log.findAll()
+//http://localhost:3000/log/log/3
+router.get('/log/:id', validateSession, (req, res) => {
+    const query = {where: {owner_id: req.params.id}};
+
+    Log.findOne()
     .then((logs) => res.status(200).json(logs))
     .catch((err) => res.status(500).json({error: err}));
 });
@@ -44,8 +48,8 @@ router.get('/log/:id', (req, res) => {
 /* ***********************
 **** DELETE LOG ENTRY ****
 *********************** */
-router.delete('/log/:id', (req,res)=>{
-    const query = {where: {id: req.params.userId, userId: req.user.id}};
+router.delete('/log/:id', validateSession, (req,res)=>{
+    const query = {where: {owner_id: req.params.id}};
 
     Log.destroy(query)
     .then(()=> res.status(200).json({message: 'Log removed from database.'}))
@@ -57,13 +61,13 @@ router.delete('/log/:id', (req,res)=>{
 *********************** */
 router.put('/log/:id', (req,res) => {
     const updateLogEntry = {
-        username: req.body.username,
+        owner_id: req.params.id,
         description: req.body.description,
         definition: req.body.definition,
         result: req.body.result
     };
 
-    const query = { where: {id: req.params.userId}};
+    const query = { where: {owner_id: req.params.id}};
 
     Log.update(updateLogEntry, query)
     .then((log) => res.status(200).json({message: 'Log entry updated!'}))
