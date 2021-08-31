@@ -25,9 +25,13 @@ router.post('/', validateSession, (req, res) => {
 *********************** */
 //http://localhost:3000/log/log
 router.get('/log', validateSession, (req, res) => {
-    const query = {where: {owner_id: req.params.id}};
+    const query = {
+        where: {
+            owner_id: req.user.id
+        }
+    };
 
-    Log.findAll()
+    Log.findAll(query)
     .then((logs) => res.status(200).json(logs))
     .catch((err) => res.status(500).json({error: err}));
 });
@@ -38,9 +42,14 @@ router.get('/log', validateSession, (req, res) => {
 *********************** */
 //http://localhost:3000/log/log/3
 router.get('/log/:id', validateSession, (req, res) => {
-    const query = {where: {owner_id: req.params.id}};
+    const query = {
+        where: {
+            id: req.params.id, 
+            owner_id: req.user.id
+        }
+    };
 
-    Log.findOne()
+    Log.findOne(query)
     .then((logs) => res.status(200).json(logs))
     .catch((err) => res.status(500).json({error: err}));
 });
