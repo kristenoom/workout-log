@@ -28,13 +28,31 @@ const App = () => {
         return (sessionToken === localStorage.getItem('token') ? <WorkoutIndex token={sessionToken} /> : <Auth updateToken={updateToken}/>)
     }
 
-    return (
-    <div>
-            <Sitebar clickLogout={clearToken} />
-            {protectedViews()}
-            {/* <Auth updateToken={updateToken} /> protectedViews() replaces this code*/}
-    </div>
-    );
-}
+    // constructor = () => {
+    //     super();
+    //     this.setToken = (token) => {
+    //         localStorage.setItem('token', token);
+    //         this.setState({ sessionToken: token });
+    //     }
+    //     this.state = {
+    //         sessionToken: '',
+    //         setToken: this.setToken
+    //     }
+    // }
+
+    // render = () => {
+        return (
+            <Router>
+                <AuthContext.Provider value={this.state}>
+                    <div>
+                        <Sitebar clickLogout={clearToken} />
+                        {protectedViews()}
+                        {/* <Auth updateToken={updateToken} /> protectedViews() replaces this code*/}
+                    </div>
+                </AuthContext.Provider>
+            </Router>
+        );
+    }
+
 
 export default App;
