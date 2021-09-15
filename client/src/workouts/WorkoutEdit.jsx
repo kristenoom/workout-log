@@ -22,16 +22,6 @@ const WorkoutEdit = (props) => {
             })
     };
 
-    // const editUpdateWorkout = (workout) => {
-    //     setWorkoutToUpdate(workout);
-    //     console.log(workout);
-    // };
-    // const updateOn = () => {
-    //     setUpdateActive(true);
-    // };
-    // const updateOff = () => {
-    //     setUpdateActive(false);
-    // };
     
 
     return (
