@@ -26,7 +26,7 @@ const Signup = (props) => {
             <h1>
                 Signup
             </h1>
-            <Form>
+            <Form onSubmit={handleSubmit}>
                 <FormGroup>
                     <Label htmlFor="username">
                         Username

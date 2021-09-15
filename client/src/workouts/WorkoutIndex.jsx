@@ -28,6 +28,16 @@ const WorkoutIndex = (props) => {
         fetchWorkouts();
     }, []);
 
+    const editUpdateWorkout = (workout) => {
+        setWorkoutToUpdate(workout);
+        console.log(workout);
+    };
+    const updateOn = () => {
+        setUpdateActive(true);
+    };
+    const updateOff = () => {
+        setUpdateActive(false);
+    };
 
     return (
         <Container>
