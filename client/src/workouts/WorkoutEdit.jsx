@@ -10,7 +10,13 @@ const WorkoutEdit = (props) => {
         event.preventDefault();
         fetch('http://localhost:3000/log/${props.workoutToUpdate.id}', {
             method: 'PUT',
-            body: JSON.stringify({ log: { description: editDesc, definition: editDef, result: editRes } }),
+            body: JSON.stringify({
+                log: {
+                    description: editDesc,
+                    definition: editDef,
+                    result: editRes
+                }
+            }),
             headers: new Headers({
                 'Content-Type': 'application/json',
                 'Authorization': props.token
