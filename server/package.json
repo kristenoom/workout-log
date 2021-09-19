@@ -1,5 +1,5 @@
 {
-  "name": "node-modules-server",
+  "name": "workoutlog-server",
   "version": "1.0.0",
   "description": "Journal",
   "main": "app.js",

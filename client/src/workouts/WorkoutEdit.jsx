@@ -28,8 +28,6 @@ const WorkoutEdit = (props) => {
             })
     };
 
-    
-
     return (
         <Modal isOpen={true}>
             {/* <WorkoutTable workouts={workouts} editUpdateWorkout={editUpdateWorkout} updateOn={updateOn} fetchWorkouts={fetchWorkouts} token={props.token} /> */}
