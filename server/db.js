@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 
 const sequelize = new Sequelize(
-  "node-modules-server",
+  "workoutlog-server",
   "postgres",
   "password",
   {
